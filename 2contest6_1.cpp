@@ -1,10 +1,7 @@
-/*Дан массив целых чисел в диапазоне [0..109]. Размер массива кратен 10 и ограничен сверху значением 2.5 * 107 элементов. 
-Все значения массива являются элементами псевдо-рандомной последовательности. 
-Необходимо отсортировать элементы массива за минимально время и вывести каждый десятый элемент отсортированной последовательности.
-Реализуйте сортировку, основанную на QuickSort.*/
 #include<iostream>
 #include<cstdlib>
 #include<cstdio>
+#include<vector>
 
 struct Stack
 {
@@ -65,7 +62,7 @@ struct Stack
     }
 };
 
-int PivotIndex(int *arr, int n, int first) //выбор опорного элемента медиана трех
+int PivotIndex(std::vector <int> & arr, int n, int first) //выбор опорного элемента медиана трех
 {
     int middle = first + n / 2;
     if (arr[first] < arr[first + n - 1])
@@ -86,7 +83,7 @@ int PivotIndex(int *arr, int n, int first) //выбор опорного эле�
     }
 }
 
-int Partition(int *arr, int n, int first)
+int Partition(std::vector <int> & arr, int n, int first)
 {
     int pivotIndex = PivotIndex(arr, n, first);
     std::swap(arr[pivotIndex], arr[first + n - 1]);
@@ -108,7 +105,7 @@ int Partition(int *arr, int n, int first)
     return i - first;
 }
 
-void InsertionSort(int* arr, int n)
+void InsertionSort(std::vector <int> & arr, int n)
 {
     for (int i = 1; i < n; ++i)
     {
@@ -122,7 +119,7 @@ void InsertionSort(int* arr, int n)
     }
 }
 
-void QuickSort(int* arr, int n, int first)
+void QuickSort(std::vector <int> & arr, int n, int first)
 {
     const int min_n = 100;
     int part;
@@ -154,10 +151,12 @@ void QuickSort(int* arr, int n, int first)
 int main()
 {
     int n = 0;
-    int *arr = new int [25000000];
-    while(scanf("%d %d %d %d %d %d %d %d %d %d", &arr[n], &arr[n + 1], &arr[n + 2], &arr[n + 3], &arr[n + 4], &arr[n + 5], &arr[n + 6], &arr[n + 7], &arr[n + 8], &arr[n + 9]) != EOF)
+    std::vector <int> arr;
+    int elem;
+    while(scanf("%d", &elem) != EOF)
     {
-        n += 10;
+        arr.push_back(elem);
+        ++n;
     }
     QuickSort(arr, n, 0);
     InsertionSort(arr, n); //сортируем короткие части вставками
@@ -165,7 +164,6 @@ int main()
     {
         printf("%d ", arr[i]);
     }
-    delete[] arr;
     return 0;
 }
 
